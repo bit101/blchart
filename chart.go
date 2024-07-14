@@ -150,8 +150,9 @@ func (c *Chart) endDraw() {
 		c.context.FillText(
 			c.chartLabel,
 			c.x+c.width/2-extents.Width/2,
-			c.y+c.height+extents.Height+2,
+			c.y+c.height+c.labelFontSize+2,
 		)
+		c.context.Restore()
 	}
 }
 

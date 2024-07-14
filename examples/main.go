@@ -3,6 +3,7 @@ package main
 
 import (
 	"math"
+	"slices"
 
 	"github.com/bit101/bitlib/blmath"
 	"github.com/bit101/bitlib/random"
@@ -75,18 +76,19 @@ func main() {
 	for i, val := range vals {
 		vals[i] = val * val
 	}
+	slices.Sort(vals)
 	pie := blcharts.NewPieChart(context)
-	pie.SetChartLabel("Needs category labels, eh?")
-	// pie.SetColors(
-	// 	blcolor.Aquamarine,
-	// 	blcolor.Blueviolet,
-	// 	blcolor.Coral,
-	// 	blcolor.Darkblue,
-	// 	blcolor.Gold,
-	// 	blcolor.Hotpink,
-	// 	blcolor.Lawngreen,
-	// 	blcolor.Magenta,
-	// )
+	pie.SetChartLabel("Relative Awesomeness")
+	// colors := []blcolor.Color{}
+	// for i := 0.0; i < 6; i++ {
+	// 	h := i / 6 * 330
+	// 	colors = append(colors, blcolor.HSV(h, 1, 1))
+	// }
+	// slices.SortFunc(colors, func(a, b blcolor.Color) int {
+	// 	return random.Element([]int{-1, 1})
+	// })
+	// pie.SetColors(colors...)
+	pie.SetCatLabels("Stuff", "Things", "Foo", "Bar", "Cats", "Dogs")
 	pie.Move(400, 580)
 	pie.Render(vals)
 
