@@ -54,9 +54,10 @@ func (p *PieChart) Render(vals []float64) {
 		p.setSectorColor(i, vals)
 		p.context.FillCircleSector(0, 0, radius, angle, blmath.Tau, false)
 		if len(p.catLabels) > 0 {
-			p.renderCatLabel(angle, arc, radius, p.catLabels[i])
+			p.renderLabel(angle, arc, radius, p.catLabels[i])
 		} else {
-			p.renderLabel(angle, arc, radius, val)
+			label := fmt.Sprint(blmath.RoundTo(val, p.decimals))
+			p.renderLabel(angle, arc, radius, label)
 		}
 		angle += arc
 	}
@@ -76,31 +77,12 @@ func (p *PieChart) setSectorColor(i int, vals []float64) {
 	}
 }
 
-func (p *PieChart) renderLabel(angle, arc, radius, val float64) {
+func (p *PieChart) renderLabel(angle, arc, radius float64, label string) {
 	if p.showLabels {
 		p.context.Save()
 		p.context.SetFontSize(p.labelFontSize)
 		centerAngle := angle + arc/2
-		p.context.SetSourceColor(p.fgColor)
-		label := fmt.Sprint(blmath.RoundTo(val, p.decimals))
-		x := math.Cos(centerAngle) * (radius + 10)
-		y := math.Sin(centerAngle) * (radius + 10)
-		extents := p.context.TextExtents(label)
-		y += extents.Height / 2
-		if centerAngle > math.Pi/2 && centerAngle < math.Pi*3/2 {
-			x -= extents.Width
-		}
-		p.context.FillTextAny(label, x, y)
-		p.context.Restore()
-	}
-}
-
-func (p *PieChart) renderCatLabel(angle, arc, radius float64, label string) {
-	if p.showLabels {
-		p.context.Save()
-		p.context.SetFontSize(p.labelFontSize)
-		centerAngle := angle + arc/2
-		p.context.SetSourceColor(p.fgColor)
+		p.context.SetSourceColor(p.textColor)
 		x := math.Cos(centerAngle) * (radius + 10)
 		y := math.Sin(centerAngle) * (radius + 10)
 		extents := p.context.TextExtents(label)

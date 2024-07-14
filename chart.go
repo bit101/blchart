@@ -19,6 +19,7 @@ type Chart struct {
 	height            float64
 	bgColor           blcolor.Color
 	fgColor           blcolor.Color
+	textColor         blcolor.Color
 	borderColor       blcolor.Color
 	minVal            float64
 	maxVal            float64
@@ -41,6 +42,7 @@ func NewChart(context *cairo.Context) *Chart {
 		height:            240,
 		bgColor:           blcolor.Grey(0.9),
 		fgColor:           blcolor.Grey(0.1),
+		textColor:         blcolor.Black,
 		borderColor:       blcolor.Black,
 		autoScale:         true,
 		autoScaleCompress: 0.1,
@@ -120,9 +122,14 @@ func (c *Chart) SetBgColor(bgColor blcolor.Color) {
 	c.bgColor = bgColor
 }
 
-// SetBorderColor sets the background color.
+// SetBorderColor sets the border color.
 func (c *Chart) SetBorderColor(borderColor blcolor.Color) {
 	c.borderColor = borderColor
+}
+
+// SetTextColor sets the text color.
+func (c *Chart) SetTextColor(textColor blcolor.Color) {
+	c.textColor = textColor
 }
 
 // startDraw renders the background of the chart to the context and sets clipping.
@@ -160,7 +167,7 @@ func (c *Chart) drawLabels(top, bottom float64) {
 	if c.showLabels {
 		c.context.Save()
 		c.context.SetFontSize(c.labelFontSize)
-		c.context.SetSourceColor(c.fgColor)
+		c.context.SetSourceColor(c.textColor)
 
 		// top
 		label := fmt.Sprint(blmath.RoundTo(top, c.decimals))
