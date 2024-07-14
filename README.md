@@ -2,6 +2,11 @@
 
 A very minimal charting library for [blcairo](https://github.com/bit101/blcairo) and [bitlib](https://github.com/bit101/bitlib).
 
+## Charts
+- Bar chart
+- Line chart
+- Pie chart
+
 ## Features:
 - Position and size chart
 - Default grayscale theme
@@ -15,6 +20,7 @@ A very minimal charting library for [blcairo](https://github.com/bit101/blcairo)
 - Label font size
 - Value label rotation
 - Value label precision
+- Pie chart values or labels
 - Bar chart spacing
 - Line chart line width
 - Line chart show points
@@ -24,4 +30,5 @@ A very minimal charting library for [blcairo](https://github.com/bit101/blcairo)
 - Auto scale
 - Auto scale compression (top/bottom spacing)
 
+## Examples
 ![examples](examples/example.png)
