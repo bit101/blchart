@@ -42,7 +42,13 @@ func (b *BarChart) Render(vals []float64) {
 		b.maxVal = slices.Max(vals)
 		valRange := b.maxVal - b.minVal
 		top = b.maxVal + valRange*b.autoScaleCompress
-		bottom = b.minVal
+		if b.minVal < valRange*b.autoScaleCompress && b.minVal >= 0 {
+			bottom = 0
+		} else {
+			bottom = b.minVal - valRange*b.autoScaleCompress
+		}
+		top = math.Round(top)
+		bottom = math.Round(bottom)
 	}
 	border := 1.0
 	minWidth := 0.5
@@ -57,4 +63,5 @@ func (b *BarChart) Render(vals []float64) {
 	}
 	b.context.Restore()
 	b.endDraw()
+	b.drawLabels(top, bottom)
 }

@@ -2,6 +2,7 @@
 package blcharts
 
 import (
+	"math"
 	"slices"
 
 	"github.com/bit101/bitlib/blmath"
@@ -54,6 +55,8 @@ func (l *LineChart) Render(vals []float64) {
 		valRange := l.maxVal - l.minVal
 		top = l.maxVal + valRange*l.autoScaleCompress
 		bottom = l.minVal - valRange*l.autoScaleCompress
+		top = math.Round(top)
+		bottom = math.Round(bottom)
 	}
 	l.context.SetSourceColor(l.fgColor)
 	l.context.SetLineWidth(l.lineWidth)
@@ -82,4 +85,5 @@ func (l *LineChart) Render(vals []float64) {
 		l.context.Points(points, l.pointRadius)
 	}
 	l.endDraw()
+	l.drawLabels(top, bottom)
 }

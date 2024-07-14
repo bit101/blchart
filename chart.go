@@ -2,7 +2,11 @@
 package blcharts
 
 import (
+	"fmt"
+	"math"
+
 	"github.com/bit101/bitlib/blcolor"
+	"github.com/bit101/bitlib/blmath"
 	cairo "github.com/bit101/blcairo"
 )
 
@@ -20,6 +24,11 @@ type Chart struct {
 	maxVal            float64
 	autoScale         bool
 	autoScaleCompress float64
+	decimals          int
+	showLabels        bool
+	labelFontSize     float64
+	rotateLabels      bool
+	chartLabel        string
 }
 
 // NewChart creates a new chart.
@@ -35,6 +44,11 @@ func NewChart(context *cairo.Context) *Chart {
 		borderColor:       blcolor.Black,
 		autoScale:         true,
 		autoScaleCompress: 0.1,
+		decimals:          0,
+		showLabels:        true,
+		labelFontSize:     12,
+		rotateLabels:      true,
+		chartLabel:        "",
 	}
 }
 
@@ -57,6 +71,31 @@ func (c *Chart) SetAutoScale() {
 // A value of 0 will cause lines/bars to extend to the top and bottom edges of the chart.
 func (c *Chart) SetAutoScaleCompress(margin float64) {
 	c.autoScaleCompress = margin
+}
+
+// SetDecimals sets how much precision data labels will have.
+func (c *Chart) SetDecimals(decimals int) {
+	c.decimals = decimals
+}
+
+// ShowLabels sets whether or not value labels will be shown.
+func (c *Chart) ShowLabels(show bool) {
+	c.showLabels = show
+}
+
+// RotateLabels sets whether or not value labels will be rotated.
+func (c *Chart) RotateLabels(rotate bool) {
+	c.rotateLabels = rotate
+}
+
+// SetLabelFontSize sets the size of the font used for labels.
+func (c *Chart) SetLabelFontSize(size float64) {
+	c.labelFontSize = size
+}
+
+// SetChartLabel sets the label for the chart.
+func (c *Chart) SetChartLabel(label string) {
+	c.chartLabel = label
 }
 
 // Move moves the chart to a new position.
@@ -104,4 +143,49 @@ func (c *Chart) startDraw() {
 // endDraw ends the drawing phase, resetting clipping.
 func (c *Chart) endDraw() {
 	c.context.ResetClip()
+	if c.chartLabel != "" {
+		c.context.Save()
+		c.context.SetFontSize(c.labelFontSize)
+		extents := c.context.TextExtents(c.chartLabel)
+		c.context.FillText(
+			c.chartLabel,
+			c.x+c.width/2-extents.Width/2,
+			c.y+c.height+extents.Height+2,
+		)
+	}
+}
+
+func (c *Chart) drawLabels(top, bottom float64) {
+	if c.showLabels {
+		c.context.Save()
+		c.context.SetFontSize(c.labelFontSize)
+		c.context.SetSourceColor(c.fgColor)
+
+		// top
+		label := fmt.Sprint(blmath.RoundTo(top, c.decimals))
+		extents := c.context.TextExtents(label)
+		if c.rotateLabels {
+			c.context.Save()
+			c.context.Translate(c.x, c.y)
+			c.context.Rotate(-math.Pi / 2)
+			c.context.FillText(label, -extents.Width, -5)
+			c.context.Restore()
+		} else {
+			c.context.FillText(label, c.x-extents.Width-5, c.y+extents.Height/2)
+		}
+
+		// bottom
+		label = fmt.Sprint(blmath.RoundTo(bottom, 1))
+		extents = c.context.TextExtents(label)
+		if c.rotateLabels {
+			c.context.Save()
+			c.context.Translate(c.x, c.y+c.height)
+			c.context.Rotate(-math.Pi / 2)
+			c.context.FillText(label, 0, -5)
+			c.context.Restore()
+		} else {
+			c.context.FillText(label, c.x-extents.Width-5, c.y+c.height+extents.Height/2)
+		}
+		c.context.Restore()
+	}
 }
