@@ -6,6 +6,7 @@ import (
 	"slices"
 
 	"github.com/bit101/bitlib/blmath"
+	"github.com/bit101/bitlib/geom"
 	"github.com/bit101/bitlib/random"
 	cairo "github.com/bit101/blcairo"
 	"github.com/bit101/blcairo/render"
@@ -20,7 +21,7 @@ const (
 
 func main() {
 	fileName := "out.png"
-	surface := cairo.NewSurface(740, 860)
+	surface := cairo.NewSurface(1100, 860)
 	context := cairo.NewContext(surface)
 	context.ClearWhite()
 	random.RandSeed()
@@ -92,6 +93,42 @@ func main() {
 	pie.Move(400, 580)
 	pie.Render(vals)
 
+	points := geom.NewPointList()
+	for i := range 1000 {
+		x := float64(i)
+		// x = random.GaussRange(0, 1000)
+		y := x + random.FloatRange(-1, 1)*math.Cos(x/2000*tau)*500
+		y = random.GaussRange(0, 1000) + x/2
+		points.AddXY(x, y)
+	}
+	scatter := blcharts.NewScatterChart(context)
+
+	scatter.SetChartLabel("Curious arrangement of points")
+	scatter.Move(760, 20)
+	scatter.Render(points)
+
+	points = logisticGraph(2.93, 4.0, 0.002)
+	scatter.SetPointRadius(0.25)
+	scatter.SetDecimals(5)
+	scatter.SetChartLabel("Bifurcation diagram")
+	scatter.Move(760, 300)
+	scatter.Render(points)
+
 	surface.WriteToPNG(fileName)
 	render.ViewImage(fileName)
+}
+
+func logisticGraph(minR, maxR, res float64) geom.PointList {
+	points := geom.NewPointList()
+	for r := minR; r < maxR; r += res {
+		x := 0.3
+		for range 40 {
+			x = r * x * (1 - x)
+		}
+		for range 500 {
+			x = r * x * (1 - x)
+			points.AddXY(r, x)
+		}
+	}
+	return points
 }
