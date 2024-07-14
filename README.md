@@ -6,6 +6,8 @@ A very minimal charting library for [blcairo](https://github.com/bit101/blcairo)
 - Bar chart
 - Line chart
 - Pie chart
+- Scatter chart
+- Histogram chart
 
 ## Features:
 - Position and size chart
