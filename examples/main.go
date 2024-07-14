@@ -102,7 +102,6 @@ func main() {
 		points.AddXY(x, y)
 	}
 	scatter := blcharts.NewScatterChart(context)
-
 	scatter.SetChartLabel("Curious arrangement of points")
 	scatter.Move(760, 20)
 	scatter.Render(points)
@@ -113,6 +112,17 @@ func main() {
 	scatter.SetChartLabel("Bifurcation diagram")
 	scatter.Move(760, 300)
 	scatter.Render(points)
+
+	vals = []float64{}
+	for range 10000 {
+		vals = append(vals, random.GaussRange(0, 600))
+		vals = append(vals, random.GaussRange(300, 900))
+	}
+
+	histo := blcharts.NewHistogram(context)
+	histo.SetChartLabel("Histogram with twin peaks")
+	histo.Move(760, 580)
+	histo.Render(vals)
 
 	surface.WriteToPNG(fileName)
 	render.ViewImage(fileName)

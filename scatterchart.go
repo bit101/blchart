@@ -2,7 +2,6 @@
 package blcharts
 
 import (
-	"fmt"
 	"slices"
 
 	"github.com/bit101/bitlib/blmath"
@@ -80,25 +79,4 @@ func (s *ScatterChart) calculateAutoScale(vals geom.PointList) {
 	s.minY = blmath.RoundTo(s.minY-yRange*s.autoScaleCompress, s.decimals)
 	s.maxX = blmath.RoundTo(s.maxX+xRange*s.autoScaleCompress, s.decimals)
 	s.maxY = blmath.RoundTo(s.maxY+yRange*s.autoScaleCompress, s.decimals)
-}
-
-func (s *ScatterChart) drawBottomLabels(maxX, minX float64) {
-	if s.showLabels {
-		s.context.Save()
-		s.context.SetFontSize(s.labelFontSize)
-		s.context.SetSourceColor(s.textColor)
-
-		// left
-		label := fmt.Sprint(blmath.RoundTo(minX, s.decimals))
-		extents := s.context.TextExtents(label)
-		s.context.FillText(label, s.x, s.y+s.height+s.labelFontSize+2)
-
-		// right
-		label = fmt.Sprint(blmath.RoundTo(maxX, s.decimals))
-		extents = s.context.TextExtents(label)
-		s.context.FillText(label, s.x+s.width-extents.Width, s.y+s.height+s.labelFontSize+2)
-
-		s.context.Restore()
-	}
-
 }

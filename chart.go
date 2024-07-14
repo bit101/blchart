@@ -197,3 +197,23 @@ func (c *Chart) drawLabels(top, bottom float64) {
 		c.context.Restore()
 	}
 }
+
+func (c *Chart) drawBottomLabels(maxX, minX float64) {
+	if c.showLabels {
+		c.context.Save()
+		c.context.SetFontSize(c.labelFontSize)
+		c.context.SetSourceColor(c.textColor)
+
+		// left
+		label := fmt.Sprint(blmath.RoundTo(minX, c.decimals))
+		extents := c.context.TextExtents(label)
+		c.context.FillText(label, c.x, c.y+c.height+c.labelFontSize+2)
+
+		// right
+		label = fmt.Sprint(blmath.RoundTo(maxX, c.decimals))
+		extents = c.context.TextExtents(label)
+		c.context.FillText(label, c.x+c.width-extents.Width, c.y+c.height+c.labelFontSize+2)
+
+		c.context.Restore()
+	}
+}
