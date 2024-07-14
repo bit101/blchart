@@ -14,6 +14,7 @@ A very minimal charting library for [blcairo](https://github.com/bit101/blcairo)
     - Foreground
     - Background
     - Border
+    - Text
     - Category colors for pie chart
 - Chart label
 - Show/hide labels
@@ -28,7 +29,7 @@ A very minimal charting library for [blcairo](https://github.com/bit101/blcairo)
 - Line chart fill area
 - Manual chart scale
 - Auto scale
-- Auto scale compression (top/bottom spacing)
+- Auto scale compression (adds top/bottom spacing)
 
 ## Examples
 ![examples](examples/example.png)
