@@ -1,0 +1,10 @@
+github.com/bit101/bitlib v0.5.2 h1:n5uw8Vk/BhBgW9FXtUCTgTB6F6PS7rCdkd1PLAGzY6g=
+github.com/bit101/bitlib v0.5.2/go.mod h1:d0L7f0E8a21VD7cDuVuIsNyD4yqqxZsvgKxh5Nx433E=
+github.com/bit101/blcairo v1.3.9 h1:P1pRSw9EwzZ8i8A7d8i1nDbxBnxXjw0Edc8p23uMccw=
+github.com/bit101/blcairo v1.3.9/go.mod h1:R2EyRz7I8btpjrBXnQSB87mC+0De6NkYV/p07fuArZE=
+github.com/bit101/go-ansi v1.5.1 h1:iFR7XPLK0Kt4lkxhpH4r5gwhE39JldIWMr7kHCDQbcc=
+github.com/bit101/go-ansi v1.5.1/go.mod h1:7IFt7zupyULqKEDbOkGsDBGu+Bvzu3pYu0Ojnn7aGQQ=
+golang.org/x/sys v0.13.0 h1:Af8nKPmuFypiUBjVoU9V20FiaFXOcuZI21p0ycVYYGE=
+golang.org/x/sys v0.13.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/term v0.13.0 h1:bb+I9cTfFazGW51MZqBVmZy7+JEJMouUHTUSKVQLBek=
+golang.org/x/term v0.13.0/go.mod h1:LTmsnFJwVN6bCy1rVCoS+qHT1HhALEFxKncY3WNNh4U=
