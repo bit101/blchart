@@ -10,7 +10,7 @@ import (
 	"github.com/bit101/bitlib/random"
 	cairo "github.com/bit101/blcairo"
 	"github.com/bit101/blcairo/render"
-	"github.com/bit101/blcharts"
+	"github.com/bit101/blchart"
 )
 
 //revive:disable:unused-parameter
@@ -28,7 +28,7 @@ func main() {
 
 	vals := random.FloatArray(6, 50, 100)
 
-	bars := blcharts.NewBarChart(context)
+	bars := blchart.NewBarChart(context)
 	// bars.SetFgColor(blcolor.RandomRGB())
 	// bars.SetBgColor(blcolor.RandomRGB())
 	bars.SetSpacing(20)
@@ -45,7 +45,7 @@ func main() {
 	bars.Render(vals)
 
 	vals = random.FloatArray(20, 20, 100)
-	lines := blcharts.NewLineChart(context)
+	lines := blchart.NewLineChart(context)
 	// lines.SetFgColor(blcolor.RandomRGB())
 	// lines.SetBgColor(blcolor.RandomRGB())
 	lines.SetLineWidth(5)
@@ -78,7 +78,7 @@ func main() {
 		vals[i] = val * val
 	}
 	slices.Sort(vals)
-	pie := blcharts.NewPieChart(context)
+	pie := blchart.NewPieChart(context)
 	pie.SetChartLabel("Relative Awesomeness")
 	// colors := []blcolor.Color{}
 	// for i := 0.0; i < 6; i++ {
@@ -101,7 +101,7 @@ func main() {
 		y = random.GaussRange(0, 1000) + x/2
 		points.AddXY(x, y)
 	}
-	scatter := blcharts.NewScatterChart(context)
+	scatter := blchart.NewScatterChart(context)
 	scatter.SetChartLabel("Curious arrangement of points")
 	scatter.Move(760, 20)
 	scatter.Render(points)
@@ -119,7 +119,7 @@ func main() {
 		vals = append(vals, random.GaussRange(300, 900))
 	}
 
-	histo := blcharts.NewHistogram(context)
+	histo := blchart.NewHistogram(context)
 	histo.SetChartLabel("Histogram with twin peaks")
 	histo.Move(760, 580)
 	histo.Render(vals)

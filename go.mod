@@ -1,4 +1,4 @@
-module github.com/bit101/blcharts
+module github.com/bit101/blchart
 
 go 1.22.1
 
