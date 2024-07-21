@@ -1,5 +1,5 @@
-// Package blcharts defines charts.
-package blcharts
+// Package blchart defines charts.
+package blchart
 
 import (
 	"slices"

@@ -1,5 +1,5 @@
-// Package blcharts defines charts.
-package blcharts
+// Package blchart defines charts.
+package blchart
 
 import (
 	"slices"
@@ -30,13 +30,17 @@ func (h *Histogram) Render(vals []float64) {
 	border := 1.0
 	graphWidth := h.width - border*2
 	graphHeight := h.height - border*2
-	minVal := slices.Min(vals)
-	maxVal := slices.Max(vals)
+	if h.autoScale {
+		h.minVal = slices.Min(vals)
+		h.maxVal = slices.Max(vals)
+	}
 	hVals := make([]float64, int(graphWidth))
 
 	for _, val := range vals {
-		index := int(blmath.Map(val, minVal, maxVal, 0, graphWidth-1))
-		hVals[index]++
+		index := int(blmath.Map(val, h.minVal, h.maxVal, 0, graphWidth-1))
+		if index >= 0 && index < int(graphWidth) {
+			hVals[index]++
+		}
 	}
 	bottom := 0.0
 	top := slices.Max(hVals)
@@ -49,5 +53,5 @@ func (h *Histogram) Render(vals []float64) {
 	h.context.Restore()
 	h.endDraw()
 	h.drawLabels(top, bottom)
-	h.drawBottomLabels(maxVal, minVal)
+	h.drawBottomLabels(h.maxVal, h.minVal)
 }
